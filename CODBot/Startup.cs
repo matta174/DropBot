@@ -56,7 +56,6 @@ namespace CODBot
             .AddSingleton<CommandHandler>()         // Add the command handler to the collection
             .AddSingleton<StartupService>()         // Add startupservice to the collection
             .AddSingleton<LoggingService>()         // Add loggingservice to the collection
-            .AddSingleton<ExampleModule>()
              // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
         }

@@ -21,8 +21,8 @@ namespace CODBot.Modules
         }
 
         
-        [Command("missleinbound"), Alias("missle","incoming")]
-        [Summary("Missle Inbound, get down!")]
+        [Command("missileinbound"), Alias("missile","incoming")]
+        [Summary("Missile Inbound, get down!")]
         public async Task MissleInbound()
         {
             string[] gifs = new[]

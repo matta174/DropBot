@@ -77,7 +77,9 @@ namespace CODBot.Modules
             await ReplyAsync( "https://youtu.be/sQR2-Q-k_9Y?t=52");
         }
         
-        [Command("wherewedropping"), Alias("drop","whereweblappin","whereweblapping")]
+
+        [Command("wherewedropping"), Alias("drop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping")]
+
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WhereWeDropping()
         {

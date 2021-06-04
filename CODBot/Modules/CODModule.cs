@@ -27,7 +27,7 @@ namespace CODBot.Modules
         {
             ulong myChannelId = 288694246721191948;
             var voiceChannels = this.Context.Guild.VoiceChannels;
-            //string users = "";
+
             string endMessage = "";
             List<SocketGuildUser> allUsersList = new List<SocketGuildUser>();
             foreach (var channel in voiceChannels)
@@ -44,6 +44,32 @@ namespace CODBot.Modules
             await ReplyAsync(sb.ToString());
         }
         
+        [Command("callit"), Alias("call","whoiscallingit","callit")]
+        [Summary("Who calls where we drop")]
+        public async Task CallIt()
+        {
+            ulong myChannelId = 288694246721191948;
+            var voiceChannels = this.Context.Guild.VoiceChannels;
+
+            string endMessage = "";
+            List<SocketGuildUser> allUsersList = new List<SocketGuildUser>();
+            foreach (var channel in voiceChannels)
+            {
+                var users = channel.Users; // this.Context.Guild.Channels.FirstOrDefault(c => c.Id == myChannelId);
+                foreach (var user in users)
+                {
+                    allUsersList.Add(user);
+                }
+            }
+            Random rand = new Random();  
+            StringBuilder sb = new StringBuilder();
+            int index = rand.Next(allUsersList.Count);
+            
+            sb.Append(allUsersList[index] + " calls where we drop.");
+
+            await ReplyAsync(sb.ToString());
+        }
+        
         [Command("savage"), Alias("jason")]
         [Summary("Did somebody break your heart?")]
         public async Task Savage()
@@ -51,7 +77,7 @@ namespace CODBot.Modules
             await ReplyAsync( "https://youtu.be/sQR2-Q-k_9Y?t=52");
         }
         
-        [Command("wherewedropping"), Alias("drop")]
+        [Command("wherewedropping"), Alias("drop","whereweblappin","whereweblapping")]
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WhereWeDropping()
         {
@@ -68,7 +94,7 @@ namespace CODBot.Modules
         
         
         [Command("sheesh"), Alias("sheesh", "bussin")]
-        [Summary("Did somebody break your heart?")]
+        [Summary("Is it bussin'?")]
         public async Task Sheesh()
         {
             await ReplyAsync( "https://www.youtube.com/watch?v=YgT6XABqS5Y");

@@ -26,7 +26,7 @@ namespace CODBot.Services
             _commands = commands;
             _config = config;
             _provider = provider;
-
+            
             _discord.MessageReceived += OnMessageReceivedAsync;
         }
         

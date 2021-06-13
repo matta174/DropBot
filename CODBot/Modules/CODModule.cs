@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,35 @@ namespace CODBot.Modules
     [Name("COD")]
     public class CODModule : ModuleBase<SocketCommandContext>
     {
+        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        private Dictionary<string, string> locationIntelDict = new Dictionary<string,string>
+        {
+            {"Summit","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1a"}, 
+            {"Military Base","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1c"},
+            {"Salt Mine","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1d"},
+            {"Array","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1e"},
+            {"TV Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4a"},
+            {"Airport","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2a"},
+            {"Storage Town","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2d"},
+            {"Superstore","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2e"},
+            {"Factory","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2b"},
+            {"Stadium","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4c"},
+            {"Lumber","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5b"},
+            {"Boneyard","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2f"},
+            {"Train Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3a"},
+            {"Hospital","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3b"},
+            {"Downtown","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4d"},
+            {"Farmland","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5c"},
+            {"Promenade West","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3c"},
+            {"Promenade East","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3d"},
+            {"Hills","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3e"},
+            {"Park","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4e"},
+            {"Port","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5d"},
+            {"Prison","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5e"}
+        };
 
+        
+        
         [Command("say"), Alias("s")]
         [Summary("Make the bot say something")]
         [RequireUserPermission(GuildPermission.Administrator)]
@@ -158,41 +187,33 @@ namespace CODBot.Modules
             
             string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
+            
             await sent.AddReactionAsync(RedCircle);
             await sent.AddReactionAsync(BlueCircle);
             
             
             await ReplyAsync("");
         }
+        
+        [Command("intel"), Alias("intelligence", "info")]
+        [Summary("Gives intel on a location")]
+        public async Task Intel([Remainder]String location)
+        {
+
+            location = textInfo.ToTitleCase(location);
+            
+            var builder = new EmbedBuilder();
+            builder.Color = new Color(252, 186, 3);
+            builder.Title = location;
+            builder.Url = locationIntelDict[location];
+            builder.Description = "	\u2139 Click the link above for intel about " + location;
+            await ReplyAsync( "",false,builder.Build());
+        }
 
 
 
         public async Task SendOption(string location, int option)
         {
-            Dictionary<string, string> openWith = new Dictionary<string, string>();
-            openWith.Add("Summit","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1a");    
-            openWith.Add("Military Base","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1c");
-            openWith.Add("Salt Mine","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1d");
-            openWith.Add("Array","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1e");
-            openWith.Add("TV Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4a");
-            openWith.Add("Airport","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2a");
-            openWith.Add("Storage Town","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2d");
-            openWith.Add("Superstore","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2e");
-            openWith.Add("Factory","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2b");
-            openWith.Add("Stadium","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4c");
-            openWith.Add("Lumber","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5b");
-            openWith.Add("Boneyard","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2f");
-            openWith.Add("Train Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3a");
-            openWith.Add("Hospital","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3b");
-            openWith.Add("Downtown","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4d");
-            openWith.Add("Farmland","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5c");
-            openWith.Add("Promenade West","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3c");
-            openWith.Add("Promenade East","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3d");
-            openWith.Add("Hills","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3e");
-            openWith.Add("Park","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4e");
-            openWith.Add("Port","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5d");
-            openWith.Add("Prison","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5e");
-            
             var builder = new EmbedBuilder();
             if (option == 1)
             {
@@ -200,7 +221,7 @@ namespace CODBot.Modules
                 builder.Color = new Color(114, 0, 0);
                 builder.Title = location;
                 builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
-                builder.Url = openWith[location];
+                builder.Url = locationIntelDict[location];
             }
 
             if (option == 2)
@@ -208,7 +229,7 @@ namespace CODBot.Modules
                 builder.Color = new Color(0, 0, 114);
                 builder.Title = location;
                 builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
-                builder.Url = openWith[location];
+                builder.Url = locationIntelDict[location];
             }
             await ReplyAsync("", isTTS:false,builder.Build());
         }

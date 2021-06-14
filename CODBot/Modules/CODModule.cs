@@ -15,8 +15,8 @@ namespace CODBot.Modules
     [Name("COD")]
     public class CODModule : ModuleBase<SocketCommandContext>
     {
-        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-        private Dictionary<string, string> locationIntelDict = new Dictionary<string,string>
+        readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        private readonly Dictionary<string, string> _locationIntelDict = new Dictionary<string,string>
         {
             {"Summit","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1a"}, 
             {"Military Base","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1c"},
@@ -42,22 +42,28 @@ namespace CODBot.Modules
             {"Prison","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5e"}
         };
 
-        
-        
-        [Command("say"), Alias("s")]
-        [Summary("Make the bot say something")]
-        [RequireUserPermission(GuildPermission.Administrator)]
-        public async Task Say([Remainder]string text)
+        private readonly string[] _locations = new[]
         {
-            await ReplyAsync(text +" " +  this.Context.User.Username);
+            "Summit", "Military Base", "Salt Mine", "Array", "TV Station", "Airport", "Storage Town", "Superstore",
+            "Factory","Stadium", "Lumber", "Boneyard", "Train Station", "Hospital","Downtown","Farmland","Promenade West", "Promenade East",
+            "Hills","Park","Port","Prison"
+        };
+        
+        
+        [Command("summon"), Alias("assemble","rallyup","rally")]
+        [Summary("Assemble the team")]
+        [RequireUserPermission(GuildPermission.MentionEveryone)]
+        public async Task Summon()
+        {
+            await ReplyAsync("@here let's play.");
         }
 
         
         [Command("missileinbound"), Alias("missile","incoming")]
         [Summary("Missile Inbound, get down!")]
-        public async Task MissleInbound()
+        public async Task MissileInbound()
         {
-            string[] gifs = new[]
+            var gifs = new[]
             {
                 "https://media.giphy.com/media/5YnhzjBAOTd6B7KhiF/giphy.gif",
                 "https://media.giphy.com/media/iYfxT7U2QKR4A/giphy.gif",
@@ -65,13 +71,13 @@ namespace CODBot.Modules
                 "https://media.giphy.com/media/115ai8kxEG4qo8/giphy.gif",
                 "https://media.giphy.com/media/l4Ep9KQRRXtyjkIWQ/giphy.gif"
             };
-            Random rand = new Random();
-            int index = rand.Next(gifs.Length);
+            var rand = new Random();
+            var index = rand.Next(gifs.Length);
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),
                 Title = "ALERT ALERT ALERT",
-                Description = "MISSLE INBOUND",
+                Description = "MISSILE INBOUND",
                 ImageUrl = gifs[index]
             };
 
@@ -84,16 +90,7 @@ namespace CODBot.Modules
         {
             var voiceChannels = this.Context.Guild.VoiceChannels;
 
-            string endMessage = "";
-            List<SocketGuildUser> allUsersList = new List<SocketGuildUser>();
-            foreach (var channel in voiceChannels)
-            {
-                var users = channel.Users; // this.Context.Guild.Channels.FirstOrDefault(c => c.Id == myChannelId);
-                foreach (var user in users)
-                {
-                    allUsersList.Add(user);
-                }
-            }
+            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
             StringBuilder sb = new StringBuilder("Congratulations on the win ");
             allUsersList.ForEach(item => sb.Append(item.Username + " ,"));
             sb.Length--;
@@ -106,19 +103,10 @@ namespace CODBot.Modules
         {
             var voiceChannels = this.Context.Guild.VoiceChannels;
 
-            string endMessage = "";
-            List<SocketGuildUser> allUsersList = new List<SocketGuildUser>();
-            foreach (var channel in voiceChannels)
-            {
-                var users = channel.Users; // this.Context.Guild.Channels.FirstOrDefault(c => c.Id == myChannelId);
-                foreach (var user in users)
-                {
-                    allUsersList.Add(user);
-                }
-            }
-            Random rand = new Random();  
-            StringBuilder sb = new StringBuilder();
-            int index = rand.Next(allUsersList.Count);
+            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
+            var rand = new Random();  
+            var sb = new StringBuilder();
+            var index = rand.Next(allUsersList.Count);
             
             sb.Append(allUsersList[index] + " calls where we drop.");
 
@@ -139,14 +127,9 @@ namespace CODBot.Modules
         public async Task WhereWeDropping()
         {
             Random rand = new Random();  
-            string[] locations = new[]
-            {
-                "Summit", "Military Base", "Salt Mine", "Array", "TV Station", "Airport", "Storage Town", "Superstore",
-                "Factory","Stadium", "Lumber", "Boneyard", "Train Station", "Hospital","Downtown","Farmland","Promenade West", "Promenade East",
-                "Hills","Park","Port","Prison"
-            };
-            int index = rand.Next(locations.Length);
-            await ReplyAsync("Enjoy your drop to: " + locations[index]);
+
+            var index = rand.Next(_locations.Length);
+            await ReplyAsync("Enjoy your drop to: " + _locations[index]);
         }
         
         
@@ -164,15 +147,15 @@ namespace CODBot.Modules
         public async Task DropOptions()
         {
 
-            Random rand = new Random();  
-            string[] locations = new[]
+            var rand = new Random();  
+            var locations = new[]
             {
                 "Summit", "Military Base", "Salt Mine", "Array", "TV Station", "Airport", "Storage Town", "Superstore",
                 "Factory","Stadium", "Lumber", "Boneyard", "Train Station", "Hospital","Downtown","Farmland","Promenade West", "Promenade East",
                 "Hills","Park","Port","Prison"
             };
-            int index = rand.Next(locations.Length);
-            int index2 = rand.Next(locations.Length);
+            var index = rand.Next(locations.Length);
+            var index2 = rand.Next(locations.Length);
             while (index == index2)
             {
                 index2 = rand.Next(locations.Length);
@@ -182,14 +165,14 @@ namespace CODBot.Modules
             await SendOption(locations[index2],2);
             
 
-            var RedCircle = new Emoji("🔴");
-            var BlueCircle = new Emoji("🔵");
+            var redCircle = new Emoji("🔴");
+            var blueCircle = new Emoji("🔵");
             
-            string message = "Vote for your preferred drop by clicking on the corresponding emoji";
+            const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
             
-            await sent.AddReactionAsync(RedCircle);
-            await sent.AddReactionAsync(BlueCircle);
+            await sent.AddReactionAsync(redCircle);
+            await sent.AddReactionAsync(blueCircle);
             
             
             await ReplyAsync("");
@@ -197,40 +180,41 @@ namespace CODBot.Modules
         
         [Command("intel"), Alias("intelligence", "info")]
         [Summary("Gives intel on a location")]
-        public async Task Intel([Remainder]String location)
+        public async Task Intel([Remainder]string location)
         {
 
             location = textInfo.ToTitleCase(location);
-            
-            var builder = new EmbedBuilder();
-            builder.Color = new Color(252, 186, 3);
-            builder.Title = location;
-            builder.Url = locationIntelDict[location];
-            builder.Description = "	\u2139 Click the link above for intel about " + location;
+
+            var builder = new EmbedBuilder
+            {
+                Color = new Color(252, 186, 3),
+                Title = location,
+                Url = _locationIntelDict[location],
+                Description = "	\u2139 Click the link above for intel about " + location
+            };
             await ReplyAsync( "",false,builder.Build());
         }
 
 
-
-        public async Task SendOption(string location, int option)
+        private async Task SendOption(string location, int option)
         {
             var builder = new EmbedBuilder();
-            if (option == 1)
+            switch (option)
             {
-
-                builder.Color = new Color(114, 0, 0);
-                builder.Title = location;
-                builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
-                builder.Url = locationIntelDict[location];
+                case 1:
+                    builder.Color = new Color(114, 0, 0);
+                    builder.Title = location;
+                    builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
+                    builder.Url = _locationIntelDict[location];
+                    break;
+                case 2:
+                    builder.Color = new Color(0, 0, 114);
+                    builder.Title = location;
+                    builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
+                    builder.Url = _locationIntelDict[location];
+                    break;
             }
 
-            if (option == 2)
-            {
-                builder.Color = new Color(0, 0, 114);
-                builder.Title = location;
-                builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
-                builder.Url = locationIntelDict[location];
-            }
             await ReplyAsync("", isTTS:false,builder.Build());
         }
         

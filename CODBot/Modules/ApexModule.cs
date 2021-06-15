@@ -37,19 +37,42 @@ namespace CODBot.Modules
             if (textInfo.ToTitleCase(map) == "Olympus")
             {
                 var index = rand.Next(_locationsOlympus.Length);
-                await ReplyAsync("Enjoy your drop to: " + _locationsOlympus[index]);
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(114, 0, 0),
+                    Title = _locationsOlympus[index],
+                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Url = "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"
+                };
+                await ReplyAsync("",false,builder.Build());
             }
 
             if (textInfo.ToTitleCase(map) == "Kings Canyon")
             {
                 var index = rand.Next(_locationsKingsCanyon.Length);
-                await ReplyAsync("Enjoy your drop to: " + _locationsKingsCanyon[index]);
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(0, 114, 0),
+                    Title = _locationsKingsCanyon[index],
+                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Url = "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"
+                };
+                await ReplyAsync("",false,builder.Build());
             }
 
             if (textInfo.ToTitleCase(map) == "World's Edge")
             {
+                
                 var index = rand.Next(_locationsWorldsEdge.Length);
-                await ReplyAsync("Enjoy your drop to: " + _locationsWorldsEdge[index]);
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(0, 0, 114),
+                    Title = _locationsWorldsEdge[index],
+                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
+
+                };
+                await ReplyAsync("",false,builder.Build());
             }
             
 

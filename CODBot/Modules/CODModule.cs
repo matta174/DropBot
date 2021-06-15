@@ -49,98 +49,27 @@ namespace CODBot.Modules
             "Hills","Park","Port","Prison"
         };
         
-        
-        [Command("summon"), Alias("assemble","rallyup","rally")]
-        [Summary("Assemble the team")]
-        [RequireUserPermission(GuildPermission.MentionEveryone)]
-        public async Task Summon()
-        {
-            await ReplyAsync("@here let's play.");
-        }
 
-        
-        [Command("missileinbound"), Alias("missile","incoming")]
-        [Summary("Missile Inbound, get down!")]
-        public async Task MissileInbound()
-        {
-            var gifs = new[]
-            {
-                "https://media.giphy.com/media/5YnhzjBAOTd6B7KhiF/giphy.gif",
-                "https://media.giphy.com/media/iYfxT7U2QKR4A/giphy.gif",
-                "https://media.giphy.com/media/TkBIQWNNGSqTS/giphy.gif",
-                "https://media.giphy.com/media/115ai8kxEG4qo8/giphy.gif",
-                "https://media.giphy.com/media/l4Ep9KQRRXtyjkIWQ/giphy.gif"
-            };
-            var rand = new Random();
-            var index = rand.Next(gifs.Length);
-            var builder = new EmbedBuilder()
-            {
-                Color = new Color(114, 0, 0),
-                Title = "ALERT ALERT ALERT",
-                Description = "MISSILE INBOUND",
-                ImageUrl = gifs[index]
-            };
-
-            await ReplyAsync("", isTTS:false,builder.Build());
-        }
-
-        [Command("win"), Alias("ez")]
-        [Summary("Congratulate yourselves on a win")]
-        public async Task Win()
-        {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
-
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
-            StringBuilder sb = new StringBuilder("Congratulations on the win ");
-            allUsersList.ForEach(item => sb.Append(item.Username + " ,"));
-            sb.Length--;
-            await ReplyAsync(sb.ToString());
-        }
-        
-        [Command("callit"), Alias("call","whoiscallingit","callit")]
-        [Summary("Who calls where we drop")]
-        public async Task CallIt()
-        {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
-
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
-            var rand = new Random();  
-            var sb = new StringBuilder();
-            var index = rand.Next(allUsersList.Count);
-            
-            sb.Append(allUsersList[index] + " calls where we drop.");
-
-            await ReplyAsync(sb.ToString());
-        }
-        
-        [Command("savage"), Alias("jason")]
-        [Summary("Did somebody break your heart?")]
-        public async Task Savage()
-        {
-            await ReplyAsync( "https://youtu.be/sQR2-Q-k_9Y?t=52");
-        }
-        
-
-        [Command("wherewedropping"), Alias("drop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping")]
+        [Command("wherewedropping"), Alias("warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","drop","warzone")]
 
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WhereWeDropping()
         {
-            Random rand = new Random();  
-
+            Random rand = new Random();
             var index = rand.Next(_locations.Length);
-            await ReplyAsync("Enjoy your drop to: " + _locations[index]);
+            
+            
+            var builder = new EmbedBuilder
+            {
+                Color = new Color(252, 186, 3),
+                Title = _locations[index],
+                Url = _locationIntelDict[_locations[index]],
+                Description =  " \u2139 Click the link above for intel about " + _locations[index]
+            };
+            
+            await ReplyAsync("",false,builder.Build());
         }
-        
-        
-        [Command("sheesh"), Alias("sheesh", "bussin")]
-        [Summary("Is it bussin'?")]
-        public async Task Sheesh()
-        {
-            await ReplyAsync( "https://www.youtube.com/watch?v=YgT6XABqS5Y");
-        }
-        
-        
+
         [Command("dropoptions"), Alias("options", "dropvotes")]
 
         [Summary("Warzone Drop Options")]

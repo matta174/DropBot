@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CODBot.Modules;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,6 @@ namespace CODBot.Services
         private readonly CommandService _commands;
         private readonly IConfigurationRoot _config;
         private readonly IServiceProvider _provider;
-        
 
         // DiscordSocketClient, CommandService, IConfigurationRoot, and IServiceProvider are injected automatically from the IServiceProvider
         public CommandHandler(
@@ -28,6 +28,7 @@ namespace CODBot.Services
             _provider = provider;
             
             _discord.MessageReceived += OnMessageReceivedAsync;
+            _discord.SetGameAsync("dropbot.games");
         }
         
         private async Task OnMessageReceivedAsync(SocketMessage s)

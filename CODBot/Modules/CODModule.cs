@@ -50,10 +50,10 @@ namespace CODBot.Modules
         };
         
 
-        [Command("wherewedropping"), Alias("warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","drop","warzone")]
+        [Command("warzonedrop"), Alias("warzone","warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","wzdrop")]
 
         [Summary("Random Warzone Drop Location Picker")]
-        public async Task WhereWeDropping()
+        public async Task WarzoneDrop()
         {
             Random rand = new Random();
             var index = rand.Next(_locations.Length);
@@ -69,29 +69,23 @@ namespace CODBot.Modules
             
             await ReplyAsync("",false,builder.Build());
         }
+        
+        [Command("warzonedrop"), Alias("warzone","warzonevote", "wzdrop")]
 
-        [Command("dropoptions"), Alias("options", "dropvotes")]
-
-        [Summary("Warzone Drop Options")]
-        public async Task DropOptions()
+        [Summary("Random Warzone Drop Location Vote")]
+        public async Task WarzoneDrop(string vote)
         {
 
-            var rand = new Random();  
-            var locations = new[]
-            {
-                "Summit", "Military Base", "Salt Mine", "Array", "TV Station", "Airport", "Storage Town", "Superstore",
-                "Factory","Stadium", "Lumber", "Boneyard", "Train Station", "Hospital","Downtown","Farmland","Promenade West", "Promenade East",
-                "Hills","Park","Port","Prison"
-            };
-            var index = rand.Next(locations.Length);
-            var index2 = rand.Next(locations.Length);
+            var rand = new Random();
+            var index = rand.Next(_locations.Length);
+            var index2 = rand.Next(_locations.Length);
             while (index == index2)
             {
-                index2 = rand.Next(locations.Length);
+                index2 = rand.Next(_locations.Length);
             }
 
-            await SendOption(locations[index],1);
-            await SendOption(locations[index2],2);
+            await SendOption(_locations[index],1);
+            await SendOption(_locations[index2],2);
             
 
             var redCircle = new Emoji("🔴");
@@ -102,11 +96,10 @@ namespace CODBot.Modules
             
             await sent.AddReactionAsync(redCircle);
             await sent.AddReactionAsync(blueCircle);
-            
-            
-            await ReplyAsync("");
+
+            return;
         }
-        
+
         [Command("intel"), Alias("intelligence", "info")]
         [Summary("Gives intel on a location")]
         public async Task Intel([Remainder]string location)

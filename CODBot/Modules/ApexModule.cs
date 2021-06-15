@@ -75,8 +75,33 @@ namespace CODBot.Modules
                 await ReplyAsync("",false,builder.Build());
             }
             
-
         }
+        
+        
+        
+        private async Task SendOption(string location, int option, string url)
+        {
+            var builder = new EmbedBuilder();
+            switch (option)
+            {
+                case 1:
+                    builder.Color = new Color(114, 0, 0);
+                    builder.Title = location;
+                    builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
+                    builder.Url = url;
+                    break;
+                case 2:
+                    builder.Color = new Color(0, 0, 114);
+                    builder.Title = location;
+                    builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
+                    builder.Url = url;
+                    break;
+            }
+
+            await ReplyAsync("", isTTS:false,builder.Build());
+        }
+
+        
         
     }
 }

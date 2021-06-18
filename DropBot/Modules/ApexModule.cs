@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 
-namespace CODBot.Modules
+namespace DropBot.Modules
 {
     [Name("Apex")]
     public class ApexModule : ModuleBase<SocketCommandContext>
     {
-        readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
+        readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
+        readonly Random _rand = new Random();
         private readonly string[] _locationsKingsCanyon = new[]
         {
             "Slum Lakes","Artillery","Relay","The Pit", "Containment","Wetlands","Runoff","Bunker","The Cage","Swamps","Airbase","Market","Hydro Dam","Skull Town","Repulsor","Thunderdome","Water Treatment"
@@ -23,15 +24,20 @@ namespace CODBot.Modules
         {
             "Docks","Carrier","Power Grid","Rift","Oasis","Turbine","Energy Depot","Gardens","Estates","Hammond Labs","Grow Towers","Elysium","Hydroponics","Solar Array","Orbital Cannon","Bonsai Plaza"
         };
+
+        private readonly Dictionary<string, string> _locationIntelDict = new Dictionary<string, string>
+        {
+            {"Kings Canyon", "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"},
+            {"World's Edge","https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158"},
+            {"Olympus","https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"}
+        };
         
         [Command("apexdrop"), Alias("apexdrop", "apex")]
 
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
         {
-            Random rand = new Random();
-            
-            var index1 = rand.Next(_locationsOlympus.Length);
+            var index1 = _rand.Next(_locationsOlympus.Length);
             var builder1 = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),
@@ -41,7 +47,7 @@ namespace CODBot.Modules
             };
             await ReplyAsync("",false,builder1.Build());
 
-            var index2 = rand.Next(_locationsKingsCanyon.Length);
+            var index2 = _rand.Next(_locationsKingsCanyon.Length);
             var builder2 = new EmbedBuilder()
             {
                 Color = new Color(0, 114, 0),
@@ -51,7 +57,7 @@ namespace CODBot.Modules
             };
             await ReplyAsync("",false,builder2.Build());
 
-            var index3 = rand.Next(_locationsWorldsEdge.Length);
+            var index3 = _rand.Next(_locationsWorldsEdge.Length);
             var builder3 = new EmbedBuilder()
             {
                 Color = new Color(0, 0, 114),
@@ -67,12 +73,9 @@ namespace CODBot.Modules
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop([Remainder]string map)
         {
-            Random rand = new Random();
-
-
-            if (textInfo.ToTitleCase(map) == "Olympus")
+            if (_textInfo.ToTitleCase(map) == "Olympus")
             {
-                var index = rand.Next(_locationsOlympus.Length);
+                var index = _rand.Next(_locationsOlympus.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(114, 0, 0),
@@ -83,9 +86,9 @@ namespace CODBot.Modules
                 await ReplyAsync("",false,builder.Build());
             }
 
-            if (textInfo.ToTitleCase(map) == "Kings Canyon")
+            if (_textInfo.ToTitleCase(map) == "Kings Canyon")
             {
-                var index = rand.Next(_locationsKingsCanyon.Length);
+                var index = _rand.Next(_locationsKingsCanyon.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(0, 114, 0),
@@ -96,10 +99,10 @@ namespace CODBot.Modules
                 await ReplyAsync("",false,builder.Build());
             }
 
-            if (textInfo.ToTitleCase(map) == "World's Edge")
+            if (_textInfo.ToTitleCase(map) == "World's Edge")
             {
                 
-                var index = rand.Next(_locationsWorldsEdge.Length);
+                var index = _rand.Next(_locationsWorldsEdge.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(0, 0, 114),
@@ -120,78 +123,44 @@ namespace CODBot.Modules
         {
             Random rand = new Random();
             
-            if (textInfo.ToTitleCase(map) == "Olympus")
+            if (_textInfo.ToTitleCase(map) == "Olympus")
             {
-                
-                var index1 = rand.Next(_locationsOlympus.Length);
-                var index2 = rand.Next(_locationsOlympus.Length);
-                while (index1 == index2)
-                {
-                    index2 = rand.Next(_locationsOlympus.Length);
-                }
-
-                await SendOption(_locationsOlympus[index1], 1,
-                    "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land");
-                await SendOption(_locationsOlympus[index2], 2,
-                    "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land");
-                
-                var redCircle = new Emoji("🔴");
-                var blueCircle = new Emoji("🔵");
-            
-                const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
-                var sent = await Context.Channel.SendMessageAsync(message);
-            
-                await sent.AddReactionAsync(redCircle);
-                await sent.AddReactionAsync(blueCircle);
-                return;
-                
+                await SendVote(_locationsOlympus,"Olympus");
             }
 
-            if (textInfo.ToTitleCase(map) == "Kings Canyon")
+            if (_textInfo.ToTitleCase(map) == "Kings Canyon")
             {
-                var index1 = rand.Next(_locationsKingsCanyon.Length);
-                var index2 = rand.Next(_locationsKingsCanyon.Length);
-                while (index1 == index2)
-                {
-                    index2 = rand.Next(_locationsKingsCanyon.Length);
-                }
-                await SendOption(_locationsKingsCanyon[index1], 1,
-                    "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide");
-                await SendOption(_locationsKingsCanyon[index2], 2,
-                    "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide");
-                
-                var redCircle = new Emoji("🔴");
-                var blueCircle = new Emoji("🔵");
-            
-                const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
-                var sent = await Context.Channel.SendMessageAsync(message);
-            
-                await sent.AddReactionAsync(redCircle);
-                await sent.AddReactionAsync(blueCircle);
+                await SendVote(_locationsKingsCanyon, "Kings Canyon");
             }
 
-            if (textInfo.ToTitleCase(map) == "World's Edge")
+            if (_textInfo.ToTitleCase(map) == "World's Edge")
             {
-                var index1 = rand.Next(_locationsWorldsEdge.Length);
-                var index2 = rand.Next(_locationsWorldsEdge.Length);
-                while (index1 == index2)
-                {
-                    index2 = rand.Next(_locationsWorldsEdge.Length);
-                }
-                await SendOption(_locationsWorldsEdge[index1], 1,
-                    "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/");
-                await SendOption(_locationsWorldsEdge[index2], 2,
-                    "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/");
-                
-                var redCircle = new Emoji("🔴");
-                var blueCircle = new Emoji("🔵");
-            
-                const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
-                var sent = await Context.Channel.SendMessageAsync(message);
-            
-                await sent.AddReactionAsync(redCircle);
-                await sent.AddReactionAsync(blueCircle);
+                await SendVote(_locationsWorldsEdge,"World's Edge");
             }
+        }
+
+        private async Task SendVote(string[] map, string mapString)
+        {
+            var index1 = _rand.Next(map.Length);
+            var index2 = _rand.Next(map.Length);
+            while (index1 == index2)
+            {
+                index2 = _rand.Next(map.Length);
+            }
+
+            await SendOption(map[index1], 1,
+                _locationIntelDict[mapString]);
+            await SendOption(map[index2], 2,
+                _locationIntelDict[mapString]);
+                
+            var redCircle = new Emoji("🔴");
+            var blueCircle = new Emoji("🔵");
+            
+            const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
+            var sent = await Context.Channel.SendMessageAsync(message);
+            
+            await sent.AddReactionAsync(redCircle);
+            await sent.AddReactionAsync(blueCircle);
             
         }
 

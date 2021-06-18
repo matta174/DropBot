@@ -5,7 +5,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 
-namespace CODBot.Services
+namespace DropBot.Services
 {
     public class LoggingService
     {

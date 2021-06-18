@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CODBot
+namespace DropBot
 {
     class Program
     {

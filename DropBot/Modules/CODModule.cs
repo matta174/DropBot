@@ -9,7 +9,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 
 
-namespace CODBot.Modules
+namespace DropBot.Modules
 {
 
     [Name("COD")]

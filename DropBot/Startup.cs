@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CODBot.Modules;
-using CODBot.Services;
+using DropBot.Modules;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DropBot.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CODBot
+namespace DropBot
 {
     public class Startup
     {

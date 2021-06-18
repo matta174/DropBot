@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CODBot.Modules;
+using DropBot.Modules;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 
-namespace CODBot.Services
+namespace DropBot.Services
 {
     public class CommandHandler
     {

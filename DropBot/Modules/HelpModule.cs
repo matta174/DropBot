@@ -4,7 +4,7 @@ using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.Configuration;
 
-namespace CODBot.Modules
+namespace DropBot.Modules
 {
     [Name("Help")]
     public class HelpModule : ModuleBase<SocketCommandContext>

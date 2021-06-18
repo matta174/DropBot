@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 
-namespace CODBot.Modules
+namespace DropBot.Modules
 {
        
     [Name("Accessories")]    

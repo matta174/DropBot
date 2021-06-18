@@ -58,7 +58,6 @@ namespace CODBot.Modules
             Random rand = new Random();
             var index = rand.Next(_locations.Length);
             
-            
             var builder = new EmbedBuilder
             {
                 Color = new Color(252, 186, 3),
@@ -75,7 +74,6 @@ namespace CODBot.Modules
         [Summary("Random Warzone Drop Location Vote")]
         public async Task WarzoneDrop(string vote)
         {
-
             var rand = new Random();
             var index = rand.Next(_locations.Length);
             var index2 = rand.Next(_locations.Length);
@@ -87,7 +85,6 @@ namespace CODBot.Modules
             await SendOption(_locations[index],1);
             await SendOption(_locations[index2],2);
             
-
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
             
@@ -116,8 +113,7 @@ namespace CODBot.Modules
             };
             await ReplyAsync( "",false,builder.Build());
         }
-
-
+        
         private async Task SendOption(string location, int option)
         {
             var builder = new EmbedBuilder();

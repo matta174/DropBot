@@ -50,12 +50,12 @@ namespace DropBot.Modules
         };
         
 
-        [Command("warzonedrop"), Alias("warzone","warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","wzdrop")]
+        [Command("warzonedrop"), Alias("warzone","warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","wzdrop","wz")]
 
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()
         {
-            Random rand = new Random();
+            var rand = new Random();
             var index = rand.Next(_locations.Length);
             
             var builder = new EmbedBuilder

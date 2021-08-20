@@ -18,7 +18,7 @@ namespace DropBot.Modules
         };
         private readonly string[] _locationsWorldsEdge = new[]
         {
-            "Skyhook","Survey Camp", "Refinery","The Epicenter","Drill Site","Fragment West","Fragment East","Overlook","Lava Fissure","The Train Yard", "Harvester", "The Geyser","Thermal Station","Sorting Factory","The Tree","The Dome","Lava City"
+            "Skyhook","Survey Camp", "Refinery","The Epicenter","Launch Site","Fragment West","Fragment East","Overlook","Lava Fissure","The Train Yard", "Harvester", "The Geyser","Thermal Station","Sorting Factory","The Tree","The Dome","Lava City"
         };
         private readonly string[] _locationsOlympus = new[]
         {
@@ -109,11 +109,9 @@ namespace DropBot.Modules
                     Title = _locationsWorldsEdge[index],
                     Description =  " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
-
                 };
                 await ReplyAsync("",false,builder.Build());
             }
-            
         }
 
         [Command("apexdropvote"), Alias("apexvote")]
@@ -161,7 +159,6 @@ namespace DropBot.Modules
             
             await sent.AddReactionAsync(redCircle);
             await sent.AddReactionAsync(blueCircle);
-            
         }
 
         private async Task SendOption(string location, int option, string url)
@@ -185,8 +182,5 @@ namespace DropBot.Modules
 
             await ReplyAsync("", isTTS:false,builder.Build());
         }
-
-        
-        
     }
 }

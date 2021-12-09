@@ -33,7 +33,6 @@ namespace DropBot.Modules
         };
         
         [Command("apexdrop"), Alias("apexdrop", "apex")]
-
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
         {
@@ -68,9 +67,8 @@ namespace DropBot.Modules
             await ReplyAsync("",false,builder3.Build());
         }
         
-        [Command("apexdrop"), Alias("apexdrop", "apex")]
-
-        [Summary("Random Apex Drop Location Picker")]
+        [Command("apexdrop"), Alias("apexmap", "apex")]
+        [Summary("Apex drop for a specific map")]
         public async Task ApexDrop([Remainder]string map)
         {
             if (_textInfo.ToTitleCase(map) == "Olympus")
@@ -101,7 +99,6 @@ namespace DropBot.Modules
 
             if (_textInfo.ToTitleCase(map) == "World's Edge")
             {
-                
                 var index = _rand.Next(_locationsWorldsEdge.Length);
                 var builder = new EmbedBuilder()
                 {

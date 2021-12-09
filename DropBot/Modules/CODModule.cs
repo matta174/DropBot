@@ -16,6 +16,8 @@ namespace DropBot.Modules
     public class CODModule : ModuleBase<SocketCommandContext>
     {
         readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        private static string tempURL = "https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html";
+        
         // Keeping this commented in case Verdansk makes a comeback
         // private readonly Dictionary<string, string> _locationIntelDict = new Dictionary<string,string>
         // {
@@ -44,23 +46,24 @@ namespace DropBot.Modules
         // };
         
         // ToDo: Update the links once we have an interactive map on CoD's website. 
+
         private readonly Dictionary<string,string> _locationIntelDict = new Dictionary<string, string>
         {
-            {"Arsenal","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Docks","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Runway","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Ruins","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Mines","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Peak","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Beachhead","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Village","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Lagoon","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Airfield","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Fields","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Sub Pen","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Power Plant","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Capital","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"},
-            {"Resort","https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html"}
+            {"Arsenal",tempURL},
+            {"Docks",tempURL},
+            {"Runway",tempURL},
+            {"Ruins",tempURL},
+            {"Mines",tempURL},
+            {"Peak",tempURL},
+            {"Beachhead",tempURL},
+            {"Village",tempURL},
+            {"Lagoon",tempURL},
+            {"Airfield",tempURL},
+            {"Fields",tempURL},
+            {"Sub Pen",tempURL},
+            {"Power Plant",tempURL},
+            {"Capital",tempURL},
+            {"Resort",tempURL}
         };
 
         // Keeping this commented in case Verdansk makes a comeback

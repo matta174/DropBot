@@ -9,7 +9,6 @@ namespace DropBot.Modules
     [Name("Fortnite")]
     public class FortniteModule : ModuleBase<SocketCommandContext>
     {
-        readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         private static string tempURL = "https://www.epicgames.com/fortnite/en-US/news/whats-new-in-fortnite-battle-royale-chapter-3-season-1-flipped";
         
         private readonly string[] _locations = {

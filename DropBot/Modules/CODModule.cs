@@ -79,7 +79,7 @@ namespace DropBot.Modules
             "Fields", "Sub Pen", "Power Plant", "Capital", "Resort"
         };
 
-        [Command("warzonedrop"), Alias("warzone","warzonedrop", "wherewebloppin", "wherewedroppin", "whereweblappin","whereweblapping","wzdrop","wz")]
+        [Command("warzonedrop"), Alias("warzone","warzonedrop","wzdrop","wz")]
 
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()

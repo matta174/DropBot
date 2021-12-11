@@ -10,8 +10,7 @@ The command structure is easy. Simply type !drop Warzone or !drop Apex and you'l
 Current games supported:
 - Apex Legends
 - Call Of Duty Warzone
-
-Future games supported:
 - Fortnite
 - Pubg
+
 

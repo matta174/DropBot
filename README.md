@@ -5,7 +5,8 @@ DropBot is a Discord Chatbot with the ability to assign drops at random or leave
 
 ## To Add DropBot to your server click [here](https://discord.com/oauth2/authorize?client_id=855457608286076938&scope=bot)
 
-The command structure is easy. Simply type !drop Warzone or !drop Apex and you'll receive a response instantly on where to land. As well as a link for any further intel. 
+The command structure is easy. Simply type !wz or !apex and you'll receive a response instantly on where to land. As well as a link for any further intel. 
+If you need any instruction on any other commands just call !help.
 
 Current games supported:
 - Apex Legends

@@ -39,7 +39,14 @@ namespace DropBot.Modules
                 {
                     var result = await cmd.CheckPreconditionsAsync(Context);
                     if (result.IsSuccess)
-                        description += $"{prefix}{cmd.Aliases.First()} - {cmd.Summary}\n";
+                        description += $"{prefix} **{cmd.Aliases.First()}** - {cmd.Summary}\nHow to call this command: ***";
+                    foreach (var command in cmd.Aliases)
+                    {
+                        description += $"!{command} ";
+                    }
+
+                    description += "***\n";
+
                 }
                 
                 if (!string.IsNullOrWhiteSpace(description))

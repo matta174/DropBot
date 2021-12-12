@@ -43,7 +43,7 @@ namespace DropBot.Modules
 
             var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
             StringBuilder sb = new StringBuilder("Congratulations on the win ");
-            allUsersList.ForEach(item => sb.Append(item.Username + " ,"));
+            allUsersList.ForEach(item => sb.Append(item.Username + ", "));
             sb.Length--;
             await ReplyAsync(sb.ToString());
         }

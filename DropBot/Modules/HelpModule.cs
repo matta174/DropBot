@@ -60,7 +60,7 @@ namespace DropBot.Modules
                 }
             }
 
-            await ReplyAsync("", false, builder.Build());
+            await ReplyAsync(string.Empty, false, builder.Build());
         }
 
         [Command("help")]
@@ -94,7 +94,7 @@ namespace DropBot.Modules
                 });
             }
 
-            await ReplyAsync("", false, builder.Build());
+            await ReplyAsync(string.Empty, false, builder.Build());
         }
     }
 }

@@ -76,16 +76,19 @@ namespace DropBot.Modules
                 index2 = rand.Next(_locations.Length);
             }
 
+
             await SendOption(_locations[index],1);
             await SendOption(_locations[index2],2);
+
             
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
             
             const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
-            
+
             await sent.AddReactionAsync(redCircle);
+            System.Threading.Thread.Sleep(1500); // We don't want to get rate limited every time we hit wzvote
             await sent.AddReactionAsync(blueCircle);
 
             return;

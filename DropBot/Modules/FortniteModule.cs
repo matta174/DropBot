@@ -30,7 +30,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click the link above for intel about " + _locations[index]
             };
             
-            await ReplyAsync("",false,builder.Build());
+            await ReplyAsync(string.Empty,false,builder.Build());
         }
     }
 }

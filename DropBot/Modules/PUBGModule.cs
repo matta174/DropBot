@@ -42,7 +42,7 @@ namespace DropBot.Modules
                 Description =  "\u2139 Click on the link above for additional intel. ",
                 Url = tempURL
             };
-            await ReplyAsync("",false,builder1.Build());
+            await ReplyAsync(string.Empty,false,builder1.Build());
 
             var index2 = _rand.Next(_locationsMiramar.Length);
             var builder2 = new EmbedBuilder()
@@ -52,7 +52,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click on the link above for additional intel. ",
                 Url = tempURL
             };
-            await ReplyAsync("",false,builder2.Build());
+            await ReplyAsync(string.Empty,false,builder2.Build());
 
             var index3 = _rand.Next(_locationsSanhok.Length);
             var builder3 = new EmbedBuilder()
@@ -62,7 +62,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click on the link above for additional intel. ",
                 Url = tempURL
             };
-            await ReplyAsync("",false,builder3.Build());
+            await ReplyAsync(string.Empty,false,builder3.Build());
             
             var index4 = _rand.Next(_locationsVikendi.Length);
             var builder4 = new EmbedBuilder()
@@ -72,7 +72,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click on the link above for additional intel. ",
                 Url = tempURL
             };
-            await ReplyAsync("",false,builder4.Build());
+            await ReplyAsync(string.Empty,false,builder4.Build());
         }
 
         

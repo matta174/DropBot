@@ -49,7 +49,7 @@ namespace DropBot.Services
                 var result = await _commands.ExecuteAsync(context, argPos, _provider);     // Execute the command
 
                 if (!result.IsSuccess)     // If not successful, reply with the error.
-                    await context.Channel.SendMessageAsync(result.ToString());
+                    await context.Channel.SendMessageAsync( $"Oops! Something went wrong there: *{result.ErrorReason}* Type `!help` for more information on how to use the commands.");
             }
         }
     }

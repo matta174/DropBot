@@ -17,34 +17,7 @@ namespace DropBot.Modules
     {
         readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         private static string tempURL = "https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html";
-        
-        // Keeping this commented in case Verdansk makes a comeback
-        // private readonly Dictionary<string, string> _locationIntelDict = new Dictionary<string,string>
-        // {
-        //     {"Summit","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1a"}, 
-        //     {"Military Base","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1c"},
-        //     {"Salt Mine","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1d"},
-        //     {"Array","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-north/zone-1e"},
-        //     {"TV Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4a"},
-        //     {"Airport","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2a"},
-        //     {"Storage Town","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2d"},
-        //     {"Superstore","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2e"},
-        //     {"Factory","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2b"},
-        //     {"Stadium","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4c"},
-        //     {"Lumber","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5b"},
-        //     {"Boneyard","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-west/zone-2f"},
-        //     {"Train Station","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3a"},
-        //     {"Hospital","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3b"},
-        //     {"Downtown","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4d"},
-        //     {"Farmland","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5c"},
-        //     {"Promenade West","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3c"},
-        //     {"Promenade East","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3d"},
-        //     {"Hills","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-southwest/zone-3e"},
-        //     {"Park","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-south-and-central/zone-4e"},
-        //     {"Port","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5d"},
-        //     {"Prison","https://www.callofduty.com/warzone/strategyguide/tac-map-atlas/verdansk-east/zone-5e"}
-        // };
-        
+
         // ToDo: Update the links once we have an interactive map on CoD's website. 
 
         private readonly Dictionary<string,string> _locationIntelDict = new Dictionary<string, string>
@@ -65,14 +38,6 @@ namespace DropBot.Modules
             {"Capital",tempURL},
             {"Resort",tempURL}
         };
-
-        // Keeping this commented in case Verdansk makes a comeback
-        // private readonly string[] _locations = new[]
-        // {
-        //     "Summit", "Military Base", "Salt Mine", "Array", "TV Station", "Airport", "Storage Town", "Superstore",
-        //     "Factory","Stadium", "Lumber", "Boneyard", "Train Station", "Hospital","Downtown","Farmland","Promenade West", "Promenade East",
-        //     "Hills","Park","Port","Prison"
-        // };
 
         private readonly string[] _locations = {
             "Arsenal", "Docks", "Runway", "Ruins", "Mines", "Peak", "Beachhead", "Village", "Lagoon", "Airfield",
@@ -95,7 +60,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click the link above for intel about " + _locations[index]
             };
             
-            await ReplyAsync("",false,builder.Build());
+            await ReplyAsync(string.Empty,false,builder.Build());
         }
         
         [Command("warzonevote"), Alias( "wzvote")]
@@ -111,16 +76,19 @@ namespace DropBot.Modules
                 index2 = rand.Next(_locations.Length);
             }
 
+
             await SendOption(_locations[index],1);
             await SendOption(_locations[index2],2);
+
             
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
             
             const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
-            
+
             await sent.AddReactionAsync(redCircle);
+            System.Threading.Thread.Sleep(1500); // We don't want to get rate limited every time we hit wzvote
             await sent.AddReactionAsync(blueCircle);
 
             return;
@@ -140,7 +108,7 @@ namespace DropBot.Modules
                 Url = _locationIntelDict[location],
                 Description = "	\u2139 Click the link above for intel about " + location
             };
-            await ReplyAsync( "",false,builder.Build());
+            await ReplyAsync( string.Empty,false,builder.Build());
         }
         
         private async Task SendOption(string location, int option)
@@ -162,7 +130,7 @@ namespace DropBot.Modules
                     break;
             }
 
-            await ReplyAsync("", isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
         }
         
 

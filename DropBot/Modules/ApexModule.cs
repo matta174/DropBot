@@ -44,7 +44,7 @@ namespace DropBot.Modules
                 Description =  "\u2139 Click on the link above for additional intel. ",
                 Url = "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"
             };
-            await ReplyAsync("",false,builder1.Build());
+            await ReplyAsync(string.Empty,false,builder1.Build());
 
             var index2 = _rand.Next(_locationsKingsCanyon.Length);
             var builder2 = new EmbedBuilder()
@@ -54,7 +54,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click on the link above for additional intel. ",
                 Url = "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"
             };
-            await ReplyAsync("",false,builder2.Build());
+            await ReplyAsync(string.Empty,false,builder2.Build());
 
             var index3 = _rand.Next(_locationsWorldsEdge.Length);
             var builder3 = new EmbedBuilder()
@@ -64,7 +64,7 @@ namespace DropBot.Modules
                 Description =  " \u2139 Click on the link above for additional intel. ",
                 Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
             };
-            await ReplyAsync("",false,builder3.Build());
+            await ReplyAsync(string.Empty,false,builder3.Build());
         }
         
         [Command("apexdrop"), Alias("apexmap", "apex")]
@@ -81,7 +81,7 @@ namespace DropBot.Modules
                     Description =  " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"
                 };
-                await ReplyAsync("",false,builder.Build());
+                await ReplyAsync(string.Empty,false,builder.Build());
             }
 
             if (_textInfo.ToTitleCase(map) == "Kings Canyon")
@@ -94,7 +94,7 @@ namespace DropBot.Modules
                     Description =  " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"
                 };
-                await ReplyAsync("",false,builder.Build());
+                await ReplyAsync(string.Empty,false,builder.Build());
             }
 
             if (_textInfo.ToTitleCase(map) == "World's Edge")
@@ -107,7 +107,7 @@ namespace DropBot.Modules
                     Description =  " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
                 };
-                await ReplyAsync("",false,builder.Build());
+                await ReplyAsync(string.Empty,false,builder.Build());
             }
         }
 
@@ -177,7 +177,7 @@ namespace DropBot.Modules
                     break;
             }
 
-            await ReplyAsync("", isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
         }
     }
 }

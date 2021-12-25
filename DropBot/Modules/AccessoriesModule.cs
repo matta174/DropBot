@@ -44,7 +44,7 @@ namespace DropBot.Modules
             var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
             StringBuilder sb = new StringBuilder("Congratulations on the win ");
             allUsersList.ForEach(item => sb.Append(item.Username + ", "));
-            sb.Length--;
+            sb.Length -= 2;
             await ReplyAsync(sb.ToString());
         }
         
@@ -70,7 +70,7 @@ namespace DropBot.Modules
                 ImageUrl = gifs[index]
             };
 
-            await ReplyAsync("", isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
         }
         
         [Command("summon"), Alias("assemble","rallyup","rally")]

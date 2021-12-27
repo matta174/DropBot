@@ -44,7 +44,7 @@ namespace DropBot.Modules
             "Fields", "Sub Pen", "Power Plant", "Capital", "Resort"
         };
 
-        [Command("warzonedrop"), Alias("warzone","warzonedrop","wzdrop","wz")]
+        [Command("warzonedrop"), Alias("wz", "warzone","warzonedrop","wzdrop")]
 
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()
@@ -63,7 +63,7 @@ namespace DropBot.Modules
             await ReplyAsync(string.Empty,false,builder.Build());
         }
         
-        [Command("warzonevote"), Alias( "wzvote")]
+        [Command("warzonevote"), Alias( "wzvote", "wzv")]
 
         [Summary("Random Warzone Drop Location Vote")]
         public async Task WarzoneVote()
@@ -94,23 +94,6 @@ namespace DropBot.Modules
             return;
         }
 
-        [Command("intel"), Alias("intelligence", "info")]
-        [Summary("Gives intel on a location")]
-        public async Task Intel([Remainder]string location)
-        {
-
-            location = textInfo.ToTitleCase(location);
-
-            var builder = new EmbedBuilder
-            {
-                Color = new Color(252, 186, 3),
-                Title = location,
-                Url = _locationIntelDict[location],
-                Description = "	\u2139 Click the link above for intel about " + location
-            };
-            await ReplyAsync( string.Empty,false,builder.Build());
-        }
-        
         private async Task SendOption(string location, int option)
         {
             var builder = new EmbedBuilder();

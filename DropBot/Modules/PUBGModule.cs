@@ -30,7 +30,7 @@ namespace DropBot.Modules
             "Port","Zabava","Cosmodrome","Trevno","Krichas","Coal Mine","Dobro Mesto","Goroka","Mount Kreznic","Podvosto","Peshkova","Villa","Cement Factory","Vihar","Movatra","Dino Park","Tovar","Castle","Sawmill","Abbey","Volnova","Cantra","Hot Springs","Milnar","Pilnec","Winery"
         };
         
-        [Command("pubgDrop"), Alias("pubgdrop", "pubg")]
+        [Command("pubgDrop"), Alias( "pubg", "pubgdrop")]
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
         {

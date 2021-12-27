@@ -15,7 +15,7 @@ namespace DropBot.Modules
             "LogJam Lumberyard", "Sleepy Sound", "Shifty Shafts", "The Daily Bugle", "Coney Crossroads", "Camp Cuddle", "Sanctuary", "Greasy Grove", "Rocky Reels", "The Joneses", "Condo Canyon", "Chonkers Speedway"
         };
 
-        [Command("FortniteDrop"), Alias("fn","fortnite","fortnitedrop","fndrop")]
+        [Command("FortniteDrop"), Alias("fn", "fortnite", "fortnitedrop", "fndrop")]
         [Summary("Random Fortnite Chapter 3 Drop Location Picker")]
         public async Task FortniteDrop()
         {

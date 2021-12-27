@@ -25,7 +25,7 @@ namespace DropBot.Modules
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 137, 218),
-                Description = "These are the commands you can use"
+                Description = "These are the commands you can use. For further information type `!help **command name**` e.g. `!help wz`"
             };
             
             foreach (var module in _service.Modules)
@@ -78,7 +78,7 @@ namespace DropBot.Modules
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 137, 218),
-                Description = $"Here are some commands like **{command}**"
+                Description = $"Here are all the ways you can call: **{command}**"
             };
 
             foreach (var match in result.Commands)
@@ -88,7 +88,8 @@ namespace DropBot.Modules
                 builder.AddField(x =>
                 {
                     x.Name = string.Join(", ", cmd.Aliases);
-                    x.Value = $"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" + 
+                    x.Value = $"Parameters: {string.Join(", ", cmd.Parameters.Select(p => p.Name))}\n" +
+                              $"Example use: `!{cmd.Aliases.First()}`\n" +
                               $"Summary: {cmd.Summary}";
                     x.IsInline = false;
                 });

@@ -48,7 +48,7 @@ namespace DropBot.Modules
             await ReplyAsync(sb.ToString());
         }
         
-        [Command("missileinbound"), Alias("missile","incoming")]
+        [Command("missileinbound"), Alias("missile","incoming","inbound")]
         [Summary("Missile Inbound, get down!")]
         public async Task MissileInbound()
         {

@@ -23,9 +23,9 @@ namespace DropBot.Modules
         [Summary("Who calls where we drop")]
         public async Task CallIt()
         {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
+            var voiceChannel = this.Context.Guild.GetUser(this.Context.User.Id).VoiceChannel;
 
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
+            var allUsersList = voiceChannel.Users.ToList();
             var rand = new Random();  
             var sb = new StringBuilder();
             var index = rand.Next(allUsersList.Count);
@@ -39,9 +39,9 @@ namespace DropBot.Modules
         [Summary("Congratulate yourselves on a win")]
         public async Task Win()
         {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
+            var voiceChannel = this.Context.Guild.GetUser(this.Context.User.Id).VoiceChannel;
 
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
+            var allUsersList = voiceChannel.Users.ToList();
             StringBuilder sb = new StringBuilder("Congratulations on the win ");
             allUsersList.ForEach(item => sb.Append(item.Username + ", "));
             sb.Length -= 2;

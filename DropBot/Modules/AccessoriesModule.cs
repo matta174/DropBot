@@ -30,7 +30,7 @@ namespace DropBot.Modules
             var sb = new StringBuilder();
             var index = rand.Next(allUsersList.Count);
             
-            sb.Append("<@" + allUsersList[index].Id + "> calls where we drop.");
+            sb.Append(allUsersList[index].Mention + " calls where we drop.");
 
             await ReplyAsync(sb.ToString());
         }

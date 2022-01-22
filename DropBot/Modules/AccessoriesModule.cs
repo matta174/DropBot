@@ -23,12 +23,21 @@ namespace DropBot.Modules
         [Summary("Who calls where we drop")]
         public async Task CallIt()
         {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
+            var user = this.Context.Guild.GetUser(this.Context.User.Id);
+            var voiceChannel = user.VoiceChannel;
 
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
-            var rand = new Random();
+
+            if(voiceChannel == null)
+            {
+                await ReplyAsync("You must be in a voice channel to use this command.");
+                return;
+            }
+            
+            var allUsersList = voiceChannel.Users.ToList();
+            var rand = new Random();  
             var sb = new StringBuilder();
             var index = rand.Next(allUsersList.Count);
+            
 
             sb.Append(allUsersList[index].Mention + " calls where we drop.");
 
@@ -39,9 +48,16 @@ namespace DropBot.Modules
         [Summary("Congratulate yourselves on a win")]
         public async Task Win()
         {
-            var voiceChannels = this.Context.Guild.VoiceChannels;
+            var user = this.Context.Guild.GetUser(this.Context.User.Id);
+            var voiceChannel = user.VoiceChannel;
 
-            var allUsersList = voiceChannels.SelectMany(channel => channel.Users).ToList();
+            if(voiceChannel == null)
+            {
+                await ReplyAsync("You must be in a voice channel to use this command.");
+                return;
+            }
+
+            var allUsersList = voiceChannel.Users.ToList();
             StringBuilder sb = new StringBuilder("Congratulations on the win ");
             allUsersList.ForEach(item => sb.Append(item.Username + ", "));
             sb.Length -= 2;

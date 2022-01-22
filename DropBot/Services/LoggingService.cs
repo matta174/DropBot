@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace DropBot.Services
 {
@@ -19,14 +19,14 @@ namespace DropBot.Services
         public LoggingService(DiscordSocketClient discord, CommandService commands)
         {
             _logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-            
+
             _discord = discord;
             _commands = commands;
-            
+
             _discord.Log += OnLogAsync;
             _commands.Log += OnLogAsync;
         }
-        
+
         private Task OnLogAsync(LogMessage msg)
         {
             if (!Directory.Exists(_logDirectory))     // Create the log directory if it doesn't exist

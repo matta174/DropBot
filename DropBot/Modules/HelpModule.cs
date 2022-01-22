@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DropBot.Modules
 {
@@ -27,7 +27,7 @@ namespace DropBot.Modules
                 Color = new Color(114, 137, 218),
                 Description = "These are the commands you can use. For further information type `!help **command name**` e.g. `!help wz`"
             };
-            
+
             foreach (var module in _service.Modules)
             {
                 if (module.Name.ToLower() == "help")
@@ -48,7 +48,7 @@ namespace DropBot.Modules
                     description += "***\n";
 
                 }
-                
+
                 if (!string.IsNullOrWhiteSpace(description))
                 {
                     builder.AddField(x =>
@@ -74,7 +74,6 @@ namespace DropBot.Modules
                 return;
             }
 
-            string prefix = _config["prefix"];
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 137, 218),

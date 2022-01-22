@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
 
 
 namespace DropBot.Modules
@@ -20,7 +17,7 @@ namespace DropBot.Modules
 
         // ToDo: Update the links once we have an interactive map on CoD's website. 
 
-        private readonly Dictionary<string,string> _locationIntelDict = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _locationIntelDict = new Dictionary<string, string>
         {
             {"Arsenal",tempURL},
             {"Docks",tempURL},
@@ -44,26 +41,26 @@ namespace DropBot.Modules
             "Fields", "Sub Pen", "Power Plant", "Capital", "Resort"
         };
 
-        [Command("warzonedrop"), Alias("wz", "warzone","warzonedrop","wzdrop")]
+        [Command("warzonedrop"), Alias("wz", "warzone", "warzonedrop", "wzdrop")]
 
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()
         {
             var rand = new Random();
             var index = rand.Next(_locations.Length);
-            
+
             var builder = new EmbedBuilder
             {
                 Color = new Color(252, 186, 3),
                 Title = _locations[index],
                 Url = _locationIntelDict[_locations[index]],
-                Description =  " \u2139 Click the link above for intel about " + _locations[index]
+                Description = " \u2139 Click the link above for intel about " + _locations[index]
             };
-            
-            await ReplyAsync(string.Empty,false,builder.Build());
+
+            await ReplyAsync(string.Empty, false, builder.Build());
         }
-        
-        [Command("warzonevote"), Alias( "wzvote", "wzv")]
+
+        [Command("warzonevote"), Alias("wzvote", "wzv")]
 
         [Summary("Random Warzone Drop Location Vote")]
         public async Task WarzoneVote()
@@ -77,13 +74,13 @@ namespace DropBot.Modules
             }
 
 
-            await SendOption(_locations[index],1);
-            await SendOption(_locations[index2],2);
+            await SendOption(_locations[index], 1);
+            await SendOption(_locations[index2], 2);
 
-            
+
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
-            
+
             const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
 
@@ -102,22 +99,22 @@ namespace DropBot.Modules
                 case 1:
                     builder.Color = new Color(114, 0, 0);
                     builder.Title = location;
-                    builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
+                    builder.Description = "\uD83D\uDD34 Click on the link above for additional intel";
                     builder.Url = _locationIntelDict[location];
                     break;
                 case 2:
                     builder.Color = new Color(0, 0, 114);
                     builder.Title = location;
-                    builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
+                    builder.Description = "\uD83D\uDD35 Click on the link above for additional intel";
                     builder.Url = _locationIntelDict[location];
                     break;
             }
 
-            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS: false, builder.Build());
         }
-        
+
 
     }
-    
-    
+
+
 }

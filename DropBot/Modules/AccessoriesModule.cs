@@ -1,30 +1,31 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
 
 namespace DropBot.Modules
 {
-       
-    [Name("Accessories")]    
-    public class AccessoriesModule: ModuleBase<SocketCommandContext>
+
+    [Name("Accessories")]
+    public class AccessoriesModule : ModuleBase<SocketCommandContext>
     {
-        
+
         [Command("savage"), Alias("jason")]
         [Summary("Did somebody break your heart?")]
         public async Task Savage()
         {
-            await ReplyAsync( "https://youtu.be/sQR2-Q-k_9Y?t=52");
+            await ReplyAsync("https://youtu.be/sQR2-Q-k_9Y?t=52");
         }
-        
-        [Command("callit"), Alias("call","whoiscallingit","callit")]
+
+        [Command("callit"), Alias("call", "whoiscallingit", "callit")]
         [Summary("Who calls where we drop")]
         public async Task CallIt()
         {
             var user = this.Context.Guild.GetUser(this.Context.User.Id);
             var voiceChannel = user.VoiceChannel;
+
 
             if(voiceChannel == null)
             {
@@ -37,11 +38,12 @@ namespace DropBot.Modules
             var sb = new StringBuilder();
             var index = rand.Next(allUsersList.Count);
             
+
             sb.Append(allUsersList[index].Mention + " calls where we drop.");
 
             await ReplyAsync(sb.ToString());
         }
-        
+
         [Command("win"), Alias("ez")]
         [Summary("Congratulate yourselves on a win")]
         public async Task Win()
@@ -61,8 +63,8 @@ namespace DropBot.Modules
             sb.Length -= 2;
             await ReplyAsync(sb.ToString());
         }
-        
-        [Command("missileinbound"), Alias("missile","incoming","inbound")]
+
+        [Command("missileinbound"), Alias("missile", "incoming", "inbound")]
         [Summary("Missile Inbound, get down!")]
         public async Task MissileInbound()
         {
@@ -84,22 +86,22 @@ namespace DropBot.Modules
                 ImageUrl = gifs[index]
             };
 
-            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS: false, builder.Build());
         }
-        
-        [Command("summon"), Alias("assemble","rallyup","rally")]
+
+        [Command("summon"), Alias("assemble", "rallyup", "rally")]
         [Summary("Assemble the team")]
         [RequireUserPermission(GuildPermission.MentionEveryone)]
         public async Task Summon()
         {
             await ReplyAsync("@here let's play.");
         }
-        
-        [Command("sheesh"), Alias( "bussin")]
+
+        [Command("sheesh"), Alias("bussin")]
         [Summary("Is it bussin'?")]
         public async Task Sheesh()
         {
-            await ReplyAsync( "https://www.youtube.com/watch?v=YgT6XABqS5Y");
+            await ReplyAsync("https://www.youtube.com/watch?v=YgT6XABqS5Y");
         }
     }
 }

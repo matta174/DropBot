@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
 
 namespace DropBot.Modules
 {
@@ -31,7 +31,7 @@ namespace DropBot.Modules
             {"World's Edge","https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158"},
             {"Olympus","https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"}
         };
-        
+
         [Command("apexdrop"), Alias("apexdrop", "apex")]
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
@@ -40,36 +40,36 @@ namespace DropBot.Modules
             var builder1 = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),
-                Title ="Olympus: " + _locationsOlympus[index1],
-                Description =  "\u2139 Click on the link above for additional intel. ",
+                Title = "Olympus: " + _locationsOlympus[index1],
+                Description = "\u2139 Click on the link above for additional intel. ",
                 Url = "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"
             };
-            await ReplyAsync(string.Empty,false,builder1.Build());
+            await ReplyAsync(string.Empty, false, builder1.Build());
 
             var index2 = _rand.Next(_locationsKingsCanyon.Length);
             var builder2 = new EmbedBuilder()
             {
                 Color = new Color(0, 114, 0),
-                Title ="Kings Canyon: " + _locationsKingsCanyon[index2],
-                Description =  " \u2139 Click on the link above for additional intel. ",
+                Title = "Kings Canyon: " + _locationsKingsCanyon[index2],
+                Description = " \u2139 Click on the link above for additional intel. ",
                 Url = "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"
             };
-            await ReplyAsync(string.Empty,false,builder2.Build());
+            await ReplyAsync(string.Empty, false, builder2.Build());
 
             var index3 = _rand.Next(_locationsWorldsEdge.Length);
             var builder3 = new EmbedBuilder()
             {
                 Color = new Color(0, 0, 114),
                 Title = "World's Edge: " + _locationsWorldsEdge[index3],
-                Description =  " \u2139 Click on the link above for additional intel. ",
+                Description = " \u2139 Click on the link above for additional intel. ",
                 Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
             };
-            await ReplyAsync(string.Empty,false,builder3.Build());
+            await ReplyAsync(string.Empty, false, builder3.Build());
         }
-        
+
         [Command("apexdrop"), Alias("apexmap", "apex")]
         [Summary("Apex drop for a specific map")]
-        public async Task ApexDrop([Remainder]string map)
+        public async Task ApexDrop([Remainder] string map)
         {
             if (_textInfo.ToTitleCase(map) == "Olympus")
             {
@@ -78,10 +78,10 @@ namespace DropBot.Modules
                 {
                     Color = new Color(114, 0, 0),
                     Title = _locationsOlympus[index],
-                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Description = " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.rockpapershotgun.com/apex-legends-olympus-map-guide-best-locations-to-land"
                 };
-                await ReplyAsync(string.Empty,false,builder.Build());
+                await ReplyAsync(string.Empty, false, builder.Build());
             }
 
             if (_textInfo.ToTitleCase(map) == "Kings Canyon")
@@ -91,10 +91,10 @@ namespace DropBot.Modules
                 {
                     Color = new Color(0, 114, 0),
                     Title = _locationsKingsCanyon[index],
-                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Description = " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.metabomb.net/off-meta/gameplay-guides/apex-legends-map-guide"
                 };
-                await ReplyAsync(string.Empty,false,builder.Build());
+                await ReplyAsync(string.Empty, false, builder.Build());
             }
 
             if (_textInfo.ToTitleCase(map) == "World's Edge")
@@ -104,10 +104,10 @@ namespace DropBot.Modules
                 {
                     Color = new Color(0, 0, 114),
                     Title = _locationsWorldsEdge[index],
-                    Description =  " \u2139 Click on the link above for additional intel. ",
+                    Description = " \u2139 Click on the link above for additional intel. ",
                     Url = "https://www.dexerto.com/apex-legends/best-worlds-edge-landing-spots-apex-legends-1511158/"
                 };
-                await ReplyAsync(string.Empty,false,builder.Build());
+                await ReplyAsync(string.Empty, false, builder.Build());
             }
         }
 
@@ -116,11 +116,10 @@ namespace DropBot.Modules
         [Summary("Random Apex Drop Location Vote")]
         public async Task ApexDropVote([Remainder] string map)
         {
-            Random rand = new Random();
-            
+
             if (_textInfo.ToTitleCase(map) == "Olympus")
             {
-                await SendVote(_locationsOlympus,"Olympus");
+                await SendVote(_locationsOlympus, "Olympus");
             }
 
             if (_textInfo.ToTitleCase(map) == "Kings Canyon")
@@ -130,7 +129,7 @@ namespace DropBot.Modules
 
             if (_textInfo.ToTitleCase(map) == "World's Edge")
             {
-                await SendVote(_locationsWorldsEdge,"World's Edge");
+                await SendVote(_locationsWorldsEdge, "World's Edge");
             }
         }
 
@@ -147,13 +146,13 @@ namespace DropBot.Modules
                 _locationIntelDict[mapString]);
             await SendOption(map[index2], 2,
                 _locationIntelDict[mapString]);
-                
+
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
-            
+
             const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
             var sent = await Context.Channel.SendMessageAsync(message);
-            
+
             await sent.AddReactionAsync(redCircle);
             await sent.AddReactionAsync(blueCircle);
         }
@@ -166,18 +165,18 @@ namespace DropBot.Modules
                 case 1:
                     builder.Color = new Color(114, 0, 0);
                     builder.Title = location;
-                    builder.Description = 	"\uD83D\uDD34 Click on the link above for additional intel";
+                    builder.Description = "\uD83D\uDD34 Click on the link above for additional intel";
                     builder.Url = url;
                     break;
                 case 2:
                     builder.Color = new Color(0, 0, 114);
                     builder.Title = location;
-                    builder.Description = 	"\uD83D\uDD35 Click on the link above for additional intel"; 
+                    builder.Description = "\uD83D\uDD35 Click on the link above for additional intel";
                     builder.Url = url;
                     break;
             }
 
-            await ReplyAsync(string.Empty, isTTS:false,builder.Build());
+            await ReplyAsync(string.Empty, isTTS: false, builder.Build());
         }
     }
 }

@@ -23,29 +23,45 @@ namespace DropBot.Modules
         [Summary("Who calls where we drop")]
         public async Task CallIt()
         {
-            var voiceChannel = this.Context.Guild.GetUser(this.Context.User.Id).VoiceChannel;
+            var user = this.Context.Guild.GetUser(this.Context.User.Id);
+            var voiceChannel = user.VoiceChannel;
 
-            var allUsersList = voiceChannel.Users.ToList();
-            var rand = new Random();  
-            var sb = new StringBuilder();
-            var index = rand.Next(allUsersList.Count);
-            
-            sb.Append("<@" + allUsersList[index].Id + "> calls where we drop.");
+            if(voiceChannel == null)
+            {
+                await ReplyAsync("You must be in a voice channel to use this command.");
+            }
+            else
+            {
+                var allUsersList = voiceChannel.Users.ToList();
+                var rand = new Random();  
+                var sb = new StringBuilder();
+                var index = rand.Next(allUsersList.Count);
+                
+                sb.Append(allUsersList[index].Mention + " calls where we drop.");
 
-            await ReplyAsync(sb.ToString());
+                await ReplyAsync(sb.ToString());
+            }
         }
         
         [Command("win"), Alias("ez")]
         [Summary("Congratulate yourselves on a win")]
         public async Task Win()
         {
-            var voiceChannel = this.Context.Guild.GetUser(this.Context.User.Id).VoiceChannel;
+            var user = this.Context.Guild.GetUser(this.Context.User.Id);
+            var voiceChannel = user.VoiceChannel;
 
-            var allUsersList = voiceChannel.Users.ToList();
-            StringBuilder sb = new StringBuilder("Congratulations on the win ");
-            allUsersList.ForEach(item => sb.Append(item.Username + ", "));
-            sb.Length -= 2;
-            await ReplyAsync(sb.ToString());
+            if(voiceChannel == null)
+            {
+                await ReplyAsync("You must be in a voice channel to use this command.");
+            }
+            else
+            {
+                var allUsersList = voiceChannel.Users.ToList();
+                StringBuilder sb = new StringBuilder("Congratulations on the win ");
+                allUsersList.ForEach(item => sb.Append(item.Username + ", "));
+                sb.Length -= 2;
+                await ReplyAsync(sb.ToString());
+            }
         }
         
         [Command("missileinbound"), Alias("missile","incoming","inbound")]

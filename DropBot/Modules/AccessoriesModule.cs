@@ -29,18 +29,17 @@ namespace DropBot.Modules
             if(voiceChannel == null)
             {
                 await ReplyAsync("You must be in a voice channel to use this command.");
+                return;
             }
-            else
-            {
-                var allUsersList = voiceChannel.Users.ToList();
-                var rand = new Random();  
-                var sb = new StringBuilder();
-                var index = rand.Next(allUsersList.Count);
-                
-                sb.Append(allUsersList[index].Mention + " calls where we drop.");
+            
+            var allUsersList = voiceChannel.Users.ToList();
+            var rand = new Random();  
+            var sb = new StringBuilder();
+            var index = rand.Next(allUsersList.Count);
+            
+            sb.Append(allUsersList[index].Mention + " calls where we drop.");
 
-                await ReplyAsync(sb.ToString());
-            }
+            await ReplyAsync(sb.ToString());
         }
         
         [Command("win"), Alias("ez")]
@@ -53,15 +52,14 @@ namespace DropBot.Modules
             if(voiceChannel == null)
             {
                 await ReplyAsync("You must be in a voice channel to use this command.");
+                return;
             }
-            else
-            {
-                var allUsersList = voiceChannel.Users.ToList();
-                StringBuilder sb = new StringBuilder("Congratulations on the win ");
-                allUsersList.ForEach(item => sb.Append(item.Username + ", "));
-                sb.Length -= 2;
-                await ReplyAsync(sb.ToString());
-            }
+
+            var allUsersList = voiceChannel.Users.ToList();
+            StringBuilder sb = new StringBuilder("Congratulations on the win ");
+            allUsersList.ForEach(item => sb.Append(item.Username + ", "));
+            sb.Length -= 2;
+            await ReplyAsync(sb.ToString());
         }
         
         [Command("missileinbound"), Alias("missile","incoming","inbound")]

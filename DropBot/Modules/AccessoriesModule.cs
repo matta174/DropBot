@@ -56,12 +56,18 @@ namespace DropBot.Modules
                 await ReplyAsync("You must be in a voice channel to use this command.");
                 return;
             }
-
             var allUsersList = voiceChannel.Users.ToList();
-            StringBuilder sb = new StringBuilder("Congratulations on the win ");
-            allUsersList.ForEach(item => sb.Append(item.Username + ", "));
+            StringBuilder sb = new StringBuilder();
+            allUsersList.ForEach(item => sb.Append($"{item.Mention}, "));
             sb.Length -= 2;
-            await ReplyAsync(sb.ToString());
+
+            var builder = new EmbedBuilder()
+            {
+                Color = new Color(255, 215, 0),
+                Title = "Congratulations on the win!",
+                Description = sb.ToString(),
+            };
+            await ReplyAsync(string.Empty, isTTS: false, builder.Build());
         }
 
         [Command("missileinbound"), Alias("missile", "incoming", "inbound")]

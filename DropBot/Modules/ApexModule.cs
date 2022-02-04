@@ -11,7 +11,7 @@ namespace DropBot.Modules
     public class ApexModule : ModuleBase<SocketCommandContext>
     {
         readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
-        readonly Random _rand = new Random();
+        private readonly Random _random = new Random();
         private readonly string[] _locationsKingsCanyon = new[]
         {
             "Slum Lakes","Artillery","Relay","The Pit", "Containment","Wetlands","Runoff","Bunker","The Cage","Swamps","Airbase","Market","Hydro Dam","Skull Town","Repulsor","Thunderdome","Water Treatment"
@@ -36,7 +36,7 @@ namespace DropBot.Modules
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
         {
-            var index1 = _rand.Next(_locationsOlympus.Length);
+            var index1 = _random.Next(_locationsOlympus.Length);
             var builder1 = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),
@@ -46,7 +46,7 @@ namespace DropBot.Modules
             };
             await ReplyAsync(string.Empty, false, builder1.Build());
 
-            var index2 = _rand.Next(_locationsKingsCanyon.Length);
+            var index2 = _random.Next(_locationsKingsCanyon.Length);
             var builder2 = new EmbedBuilder()
             {
                 Color = new Color(0, 114, 0),
@@ -56,7 +56,7 @@ namespace DropBot.Modules
             };
             await ReplyAsync(string.Empty, false, builder2.Build());
 
-            var index3 = _rand.Next(_locationsWorldsEdge.Length);
+            var index3 = _random.Next(_locationsWorldsEdge.Length);
             var builder3 = new EmbedBuilder()
             {
                 Color = new Color(0, 0, 114),
@@ -73,7 +73,7 @@ namespace DropBot.Modules
         {
             if (_textInfo.ToTitleCase(map) == "Olympus")
             {
-                var index = _rand.Next(_locationsOlympus.Length);
+                var index = _random.Next(_locationsOlympus.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(114, 0, 0),
@@ -86,7 +86,7 @@ namespace DropBot.Modules
 
             if (_textInfo.ToTitleCase(map) == "Kings Canyon")
             {
-                var index = _rand.Next(_locationsKingsCanyon.Length);
+                var index = _random.Next(_locationsKingsCanyon.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(0, 114, 0),
@@ -99,7 +99,7 @@ namespace DropBot.Modules
 
             if (_textInfo.ToTitleCase(map) == "World's Edge")
             {
-                var index = _rand.Next(_locationsWorldsEdge.Length);
+                var index = _random.Next(_locationsWorldsEdge.Length);
                 var builder = new EmbedBuilder()
                 {
                     Color = new Color(0, 0, 114),
@@ -135,11 +135,11 @@ namespace DropBot.Modules
 
         private async Task SendVote(string[] map, string mapString)
         {
-            var index1 = _rand.Next(map.Length);
-            var index2 = _rand.Next(map.Length);
+            var index1 = _random.Next(map.Length);
+            var index2 = _random.Next(map.Length);
             while (index1 == index2)
             {
-                index2 = _rand.Next(map.Length);
+                index2 = _random.Next(map.Length);
             }
 
             await SendOption(map[index1], 1,

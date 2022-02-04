@@ -13,6 +13,7 @@ namespace DropBot.Modules
     public class CODModule : ModuleBase<SocketCommandContext>
     {
         readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        private readonly Random _random = new Random();
         private static string tempURL = "https://www.callofduty.com/content/atvi/callofduty/blog/web/en/home/2021/11/call-of-duty-vanguard-warzone-caldera-season-one-map-intel.html";
 
         // ToDo: Update the links once we have an interactive map on CoD's website. 
@@ -46,8 +47,7 @@ namespace DropBot.Modules
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()
         {
-            var rand = new Random();
-            var index = rand.Next(_locations.Length);
+            var index = _random.Next(_locations.Length);
 
             var builder = new EmbedBuilder
             {
@@ -65,12 +65,11 @@ namespace DropBot.Modules
         [Summary("Random Warzone Drop Location Vote")]
         public async Task WarzoneVote()
         {
-            var rand = new Random();
-            var index = rand.Next(_locations.Length);
-            var index2 = rand.Next(_locations.Length);
+            var index = _random.Next(_locations.Length);
+            var index2 = _random.Next(_locations.Length);
             while (index == index2)
             {
-                index2 = rand.Next(_locations.Length);
+                index2 = _random.Next(_locations.Length);
             }
 
 

@@ -9,6 +9,7 @@ namespace DropBot.Modules
     public class FortniteModule : ModuleBase<SocketCommandContext>
     {
         private static string tempURL = "https://www.epicgames.com/fortnite/en-US/news/whats-new-in-fortnite-battle-royale-chapter-3-season-1-flipped";
+        private readonly Random _random = new Random();
 
         private readonly string[] _locations = {
             "LogJam Lumberyard", "Sleepy Sound", "Shifty Shafts", "The Daily Bugle", "Coney Crossroads", "Camp Cuddle", "Sanctuary", "Greasy Grove", "Rocky Reels", "The Joneses", "Condo Canyon", "Chonkers Speedway"
@@ -18,8 +19,7 @@ namespace DropBot.Modules
         [Summary("Random Fortnite Chapter 3 Drop Location Picker")]
         public async Task FortniteDrop()
         {
-            var rand = new Random();
-            var index = rand.Next(_locations.Length);
+            var index = _random.Next(_locations.Length);
 
             var builder = new EmbedBuilder
             {

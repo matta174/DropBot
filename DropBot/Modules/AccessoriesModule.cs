@@ -11,6 +11,7 @@ namespace DropBot.Modules
     [Name("Accessories")]
     public class AccessoriesModule : ModuleBase<SocketCommandContext>
     {
+        private readonly Random _random = new Random();
 
         [Command("savage"), Alias("jason")]
         [Summary("Did somebody break your heart?")]
@@ -34,9 +35,9 @@ namespace DropBot.Modules
             }
             
             var allUsersList = voiceChannel.Users.ToList();
-            var rand = new Random();  
+
             var sb = new StringBuilder();
-            var index = rand.Next(allUsersList.Count);
+            var index = _random.Next(allUsersList.Count);
             
 
             sb.Append(allUsersList[index].Mention + " calls where we drop.");
@@ -82,8 +83,7 @@ namespace DropBot.Modules
                 "https://media.giphy.com/media/115ai8kxEG4qo8/giphy.gif",
                 "https://media.giphy.com/media/l4Ep9KQRRXtyjkIWQ/giphy.gif"
             };
-            var rand = new Random();
-            var index = rand.Next(gifs.Length);
+            var index = _random.Next(gifs.Length);
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),

@@ -11,7 +11,7 @@ namespace DropBot.Modules
     {
         readonly TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         private static string tempURL = "https://pubgmap.io/";
-        readonly Random _rand = new Random();
+        readonly Random _random = new Random();
 
         private readonly string[] _locationsErangle = new[]
         {
@@ -34,7 +34,7 @@ namespace DropBot.Modules
         [Summary("Random Apex Drop Location Picker")]
         public async Task ApexDrop()
         {
-            var index1 = _rand.Next(_locationsErangle.Length);
+            var index1 = _random.Next(_locationsErangle.Length);
             var builder1 = new EmbedBuilder()
             {
                 Color = new Color(114, 0, 0),
@@ -44,7 +44,7 @@ namespace DropBot.Modules
             };
             await ReplyAsync(string.Empty, false, builder1.Build());
 
-            var index2 = _rand.Next(_locationsMiramar.Length);
+            var index2 = _random.Next(_locationsMiramar.Length);
             var builder2 = new EmbedBuilder()
             {
                 Color = new Color(0, 114, 0),
@@ -54,7 +54,7 @@ namespace DropBot.Modules
             };
             await ReplyAsync(string.Empty, false, builder2.Build());
 
-            var index3 = _rand.Next(_locationsSanhok.Length);
+            var index3 = _random.Next(_locationsSanhok.Length);
             var builder3 = new EmbedBuilder()
             {
                 Color = new Color(0, 0, 114),
@@ -64,7 +64,7 @@ namespace DropBot.Modules
             };
             await ReplyAsync(string.Empty, false, builder3.Build());
 
-            var index4 = _rand.Next(_locationsVikendi.Length);
+            var index4 = _random.Next(_locationsVikendi.Length);
             var builder4 = new EmbedBuilder()
             {
                 Color = new Color(245, 215, 66),

@@ -86,6 +86,7 @@ namespace DropBot.Modules
                 .AddField("Location Two", $"{blueCircle} {_locations[index2]}", true)
                 .AddField("Votes for Location One",0)
                 .AddField("Votes for Location Two",0)
+                .AddField("Voters ","No one has voted yet.", true)
                 .WithCurrentTimestamp()
                 .WithColor(Color.Purple);
 

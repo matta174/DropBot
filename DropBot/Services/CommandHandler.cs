@@ -69,6 +69,16 @@ namespace DropBot.Services
             var vote1 = fields.Current;
             fields.MoveNext();
             var vote2 = fields.Current;
+            fields.MoveNext();
+            var voters = fields.Current;
+            var votersString = voters.Value;
+            if (voters.Value == "No one has voted yet.")
+                votersString = String.Empty;
+            if(votersString.Contains(component.User.Username))
+            {
+                await component.RespondAsync($"{component.User.Mention} has already voted!");
+                return;
+            }    
 
             // We can now check for our custom id
             switch (component.Data.CustomId)
@@ -82,6 +92,7 @@ namespace DropBot.Services
                     .AddField(optionTwo.Name, optionTwo.Value, true)
                     .AddField(vote1.Name, x + 1)
                     .AddField(vote2.Name, vote2.Value)
+                    .AddField(voters.Name, $"{votersString} {component.User.Username}")
                     .WithColor(Color.DarkRed)
                     .WithCurrentTimestamp();
 
@@ -101,6 +112,7 @@ namespace DropBot.Services
                     .AddField(optionTwo.Name, optionTwo.Value, true)
                     .AddField(vote1.Name, vote1.Value)
                     .AddField(vote2.Name, x2 + 1)
+                    .AddField(voters.Name, $"{votersString} {component.User.Username}")
                     .WithColor(Color.Blue)
                     .WithCurrentTimestamp();
 

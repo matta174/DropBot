@@ -27,22 +27,23 @@ namespace DropBot.Modules
             var user = this.Context.Guild.GetUser(this.Context.User.Id);
             var voiceChannel = user.VoiceChannel;
 
-
             if(voiceChannel == null)
             {
                 await ReplyAsync("You must be in a voice channel to use this command.");
                 return;
             }
             
-            var allUsersList = voiceChannel.Users.ToList();
+            var usersList = voiceChannel.Users.ToList();
+            var index = _random.Next(usersList.Count);
 
-            var sb = new StringBuilder();
-            var index = _random.Next(allUsersList.Count);
-            
+            var builder = new EmbedBuilder()
+            .WithThumbnailUrl(usersList[index].GetAvatarUrl() ?? Context.User.GetDefaultAvatarUrl())
+            .WithDescription($"{usersList[index].Mention} calls where we drop. ")
+            .WithCurrentTimestamp()
+            .WithColor(Color.Red);
 
-            sb.Append(allUsersList[index].Mention + " calls where we drop.");
-
-            await ReplyAsync(sb.ToString());
+            var embed = builder.Build();
+            await ReplyAsync(null, false, embed);
         }
 
         [Command("win"), Alias("ez")]

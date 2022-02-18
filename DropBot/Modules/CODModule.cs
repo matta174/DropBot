@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -43,7 +44,6 @@ namespace DropBot.Modules
         };
 
         [Command("warzonedrop"), Alias("wz", "warzone", "warzonedrop", "wzdrop")]
-
         [Summary("Random Warzone Drop Location Picker")]
         public async Task WarzoneDrop()
         {
@@ -55,13 +55,12 @@ namespace DropBot.Modules
                 Title = _locations[index],
                 Url = _locationIntelDict[_locations[index]],
                 Description = " \u2139 Click the link above for intel about " + _locations[index]
-            };
+            }.WithCurrentTimestamp();
 
             await ReplyAsync(string.Empty, false, builder.Build());
         }
 
         [Command("warzonevote"), Alias("wzvote", "wzv")]
-
         [Summary("Random Warzone Drop Location Vote")]
         public async Task WarzoneVote()
         {
@@ -71,48 +70,28 @@ namespace DropBot.Modules
             {
                 index2 = _random.Next(_locations.Length);
             }
-
-
-            await SendOption(_locations[index], 1);
-            await SendOption(_locations[index2], 2);
-
-
             var redCircle = new Emoji("🔴");
             var blueCircle = new Emoji("🔵");
 
-            const string message = "Vote for your preferred drop by clicking on the corresponding emoji";
-            var sent = await Context.Channel.SendMessageAsync(message);
 
-            await sent.AddReactionAsync(redCircle);
-            System.Threading.Thread.Sleep(1500); // We don't want to get rate limited every time we hit wzvote
-            await sent.AddReactionAsync(blueCircle);
 
-            return;
+            var builder = new ComponentBuilder()
+                .WithButton($"{_locations[index]}", "Option-1", ButtonStyle.Danger, redCircle)
+                .WithButton($"{_locations[index2]}", "Option-2", ButtonStyle.Primary, blueCircle);
+            
+
+            var embed = new EmbedBuilder()
+                .WithTitle($"Warzone Vote")
+                .AddField("Location One",$"{redCircle} {_locations[index]}", true)
+                .AddField("Location Two", $"{blueCircle} {_locations[index2]}", true)
+                .AddField("Votes for Location One",0)
+                .AddField("Votes for Location Two",0)
+                .AddField("Voters ","No one has voted yet.", true)
+                .WithCurrentTimestamp()
+                .WithColor(Color.Purple);
+
+            await ReplyAsync(null, components: builder.Build(), embed: embed.Build());
         }
-
-        private async Task SendOption(string location, int option)
-        {
-            var builder = new EmbedBuilder();
-            switch (option)
-            {
-                case 1:
-                    builder.Color = new Color(114, 0, 0);
-                    builder.Title = location;
-                    builder.Description = "\uD83D\uDD34 Click on the link above for additional intel";
-                    builder.Url = _locationIntelDict[location];
-                    break;
-                case 2:
-                    builder.Color = new Color(0, 0, 114);
-                    builder.Title = location;
-                    builder.Description = "\uD83D\uDD35 Click on the link above for additional intel";
-                    builder.Url = _locationIntelDict[location];
-                    break;
-            }
-
-            await ReplyAsync(string.Empty, isTTS: false, builder.Build());
-        }
-
-
     }
 
 

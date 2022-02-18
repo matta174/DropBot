@@ -10,11 +10,40 @@ namespace DropBot.Services
 {
     public class CommandHandler
     {
-        private const string V = "Sup";
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
         private readonly IConfigurationRoot _config;
         private readonly IServiceProvider _provider;
+        readonly Random _random = new Random();
+
+        private readonly string[] _locationsErangle = new[]
+        {
+            "Zharki", "Severny","Stalber", "Kameshki","Georgopol","Rozhok","Yasnaya Polyana","Lipovka","Gatka","Pochinki","Mylta Power","Mylta","Promorsk","Novorepnoye","Sosnovka Military Base"
+        };
+        private readonly string[] _locationsMiramar = new[]
+        {
+           "Alcantara","La Cobreria", "Torre Ahumada","Campo Militar", "Cruz del Valle","Tierra Bronca","El Pozo", "San Martin","El Azahar","Monte Nuevo","Pecado","La Bendita", "Impala","Chumacera","Los Leones","Puerto Paraiso","Valle del Mar","Prison", "Los Higos"
+        };
+        private readonly string[] _locationsSanhok = new[]
+        {
+            "Ha Tinh","Tat Mok","Khao","Mongnai","Camp Alpha","Bootcamp","Paradise Resort","Camp Bravo","Ruins","Pai Nan","Quarry","Lakawi","Tambang","Kampong","Na Kham","Sahmee","Camp Charlie","Ban Tai","Docks"
+        };
+        private readonly string[] _locationsVikendi = new[]
+        {
+            "Port","Zabava","Cosmodrome","Trevno","Krichas","Coal Mine","Dobro Mesto","Goroka","Mount Kreznic","Podvosto","Peshkova","Villa","Cement Factory","Vihar","Movatra","Dino Park","Tovar","Castle","Sawmill","Abbey","Volnova","Cantra","Hot Springs","Milnar","Pilnec","Winery"
+        };
+        private readonly string[] _locationsKingsCanyon = new[]
+{
+            "Slum Lakes","Artillery","Relay","The Pit", "Containment","Wetlands","Runoff","Bunker","The Cage","Swamps","Airbase","Market","Hydro Dam","Skull Town","Repulsor","Thunderdome","Water Treatment"
+        };
+        private readonly string[] _locationsWorldsEdge = new[]
+        {
+            "Skyhook","Survey Camp", "Refinery","The Epicenter","Launch Site","Fragment West","Fragment East","Overlook","Lava Fissure","The Train Yard", "Harvester", "The Geyser","Thermal Station","Sorting Factory","The Tree","The Dome","Lava City"
+        };
+        private readonly string[] _locationsOlympus = new[]
+        {
+            "Docks","Carrier","Power Grid","Rift","Oasis","Turbine","Energy Depot","Gardens","Estates","Hammond Labs","Grow Towers","Elysium","Hydroponics","Solar Array","Orbital Cannon","Bonsai Plaza"
+        };
 
         // DiscordSocketClient, CommandService, IConfigurationRoot, and IServiceProvider are injected automatically from the IServiceProvider
         public CommandHandler(
@@ -30,6 +59,7 @@ namespace DropBot.Services
 
             _discord.MessageReceived += OnMessageReceivedAsync;
             _discord.ButtonExecuted += ButtonHandlerAsync;
+            _discord.SelectMenuExecuted += MenuHandlerAsync;
             _discord.SetGameAsync("dropbot.games");
         }
 
@@ -74,11 +104,11 @@ namespace DropBot.Services
             var votersString = voters.Value;
             if (voters.Value == "No one has voted yet.")
                 votersString = String.Empty;
-            if(votersString.Contains(component.User.Username))
+            if (votersString.Contains(component.User.Username))
             {
-                await component.RespondAsync($"{component.User.Mention} has already voted!");
+                await component.DeferAsync(ephemeral: true);
                 return;
-            }    
+            }
 
             // We can now check for our custom id
             switch (component.Data.CustomId)
@@ -123,6 +153,84 @@ namespace DropBot.Services
                     await component.RespondAsync($"{component.User.Mention} has voted!");
                     break;
             }
+        }
+
+        private async Task MenuHandlerAsync(SocketMessageComponent component)
+        {
+            switch (component.Data.CustomId)
+            {
+                case "pubg":
+                    var map = string.Join(", ", component.Data.Values);
+                    await PUBGSelectHandler(component, map);
+                    break;
+                case "apex":
+                    map = string.Join(", ", component.Data.Values);
+                    await ApexSelectHandler(component, map);
+                    break;
+
+            }
+        }
+
+
+        private async Task PUBGSelectHandler(SocketMessageComponent component, string map)
+        {
+            var dropLocation = string.Empty;
+            if (map == "Erangle")
+            {
+                dropLocation = $"{_locationsErangle[_random.Next(_locationsErangle.Length)]}";
+            }
+            if(map == "Miramar")
+            {
+                dropLocation = $"{_locationsMiramar[_random.Next(_locationsMiramar.Length)]}";
+            }
+            if (map == "Sanhok")
+            {
+                dropLocation = $"{_locationsSanhok[_random.Next(_locationsSanhok.Length)]}";
+            }
+            if (map == "Vikendi")
+            {
+                dropLocation = $"{_locationsVikendi[_random.Next(_locationsVikendi.Length)]}";
+            }
+            var embed = new EmbedBuilder()
+                .WithTitle($"{map}: {dropLocation}")
+                .WithDescription(" \u2139 Click on the link above for additional intel. ")
+                .WithUrl("https://pubgmap.io/")
+                .WithThumbnailUrl("https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf2nWqO7VaGKL10-G5UIygxED-WNOc3pg")
+                .WithCurrentTimestamp()
+                .WithColor(_random.Next(256), _random.Next(256), _random.Next(256));
+
+            await component.UpdateAsync(x =>
+            {
+                x.Embed = embed.Build();
+            });
+        }
+
+        private async Task ApexSelectHandler(SocketMessageComponent component, string map)
+        {
+            var dropLocation = string.Empty;
+            if (map == "Kings Canyon")
+            {
+                dropLocation = $"{_locationsKingsCanyon[_random.Next(_locationsKingsCanyon.Length)]}";
+            }
+            if (map == "World's Edge")
+            {
+                dropLocation = $"{_locationsWorldsEdge[_random.Next(_locationsWorldsEdge.Length)]}";
+            }
+            if (map == "Olympus")
+            {
+                dropLocation = $"{_locationsOlympus[_random.Next(_locationsOlympus.Length)]}";
+            }
+
+            var embed = new EmbedBuilder()
+                .WithTitle($"{map}: {dropLocation}")
+                .WithThumbnailUrl("https://upload.wikimedia.org/wikipedia/en/d/db/Apex_legends_cover.jpg")
+                .WithCurrentTimestamp()
+                .WithColor(_random.Next(256), _random.Next(256), _random.Next(256));
+
+            await component.UpdateAsync(x =>
+            {
+                x.Embed = embed.Build();
+            });
         }
     }
 }
